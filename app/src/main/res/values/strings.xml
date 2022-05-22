@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Github Users</string>
+    <string name="github_users">Github Users</string>
+    <string name="query_hint">Type a username</string>
+</resources>
