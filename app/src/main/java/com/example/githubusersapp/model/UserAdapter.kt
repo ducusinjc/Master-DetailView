@@ -13,11 +13,11 @@ import java.util.concurrent.Executors
 
 class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>(){
 
-    private val list = ArrayList<GithubUser>()
+    val githubUserAdapter = ArrayList<GithubUser>()
 
     fun setList(users: List<GithubUser>){
-        list.clear()
-        list.addAll(users)
+        githubUserAdapter.clear()
+        githubUserAdapter.addAll(users)
         notifyDataSetChanged()
     }
 
@@ -33,7 +33,7 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        val itemList = list[position]
+        val itemList = githubUserAdapter[position]
         val executor = Executors.newSingleThreadExecutor()
         var urlImage: Bitmap?
         holder.imageView.setImageResource(R.drawable.noprofile)
@@ -52,6 +52,6 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>(){
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return githubUserAdapter.size
     }
 }

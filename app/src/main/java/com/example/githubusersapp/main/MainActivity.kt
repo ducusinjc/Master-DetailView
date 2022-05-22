@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubusersapp.databinding.ActivityMainBinding
 import com.example.githubusersapp.model.UserAdapter
+import java.util.Locale.filter
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,7 +46,8 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-//                    searchUser()TODO
+                    rvUsers.adapter.githubUserAdapter.filter {it.login.contains(newText.toString())  }
+
                     return true
                 }
 
