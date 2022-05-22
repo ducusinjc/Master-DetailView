@@ -1,9 +1,7 @@
 package com.example.githubusersapp.main
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.githubusersapp.api.Api
 import com.example.githubusersapp.model.GithubUser
 import retrofit2.Call
@@ -14,7 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainViewModel : ViewModel() {
 
-    val listUsers = MutableLiveData<List<GithubUser>>()
+    private lateinit var githubUsers: List<GithubUser>
+    var listUsers = MutableLiveData<List<GithubUser>>()
 
 //    fun setSearchUsers(query: String) {
     fun setSearchUsers() {
@@ -31,6 +30,10 @@ class MainViewModel : ViewModel() {
                 ) {
                     if (response.isSuccessful) {
                         listUsers.postValue(response.body())
+
+                        if (response.body() != null) {
+                            githubUsers = response.body()!!
+                        }
                     }
                 }
 
@@ -43,5 +46,18 @@ class MainViewModel : ViewModel() {
 
     fun getSearchUsers(): LiveData<List<GithubUser>>{
         return listUsers
+    }
+
+    fun filterUsers(query: String?) {
+        if (query.isNullOrEmpty()) {
+            listUsers.value = githubUsers
+            return
+        }
+
+        val filteredList = listUsers.value?.filter { githubUser ->
+            githubUser.login.contains(query)
+        } ?: return
+
+        listUsers.value = filteredList
     }
 }

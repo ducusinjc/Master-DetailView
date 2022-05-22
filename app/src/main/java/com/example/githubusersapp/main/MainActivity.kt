@@ -1,10 +1,12 @@
 package com.example.githubusersapp.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.githubusersapp.R
 import com.example.githubusersapp.databinding.ActivityMainBinding
 import com.example.githubusersapp.model.UserAdapter
 
@@ -21,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         adapter = UserAdapter()
-        adapter.notifyDataSetChanged()
         viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
 
         binding.apply{
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-//                    searchUser()TODO
+                    viewModel.filterUsers(newText)
                     return true
                 }
 
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.getSearchUsers().observe(this) {
+
             if (it != null) {
                 adapter.setList(it)
 //                showLoading(false)

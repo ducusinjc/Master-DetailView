@@ -13,7 +13,7 @@ import java.util.concurrent.Executors
 
 class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>(){
 
-    private val list = ArrayList<GithubUser>()
+    private var list = ArrayList<GithubUser>()
 
     fun setList(users: List<GithubUser>){
         list.clear()
@@ -28,7 +28,8 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>(){
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.card_view_design, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.card_view_design, parent, false)
         return UserViewHolder(view)
     }
 
