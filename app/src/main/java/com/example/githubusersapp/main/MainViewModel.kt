@@ -11,11 +11,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MainViewModel : ViewModel() {
-
     private lateinit var githubUsers: List<GithubUser>
     var listUsers = MutableLiveData<List<GithubUser>>()
 
-//    fun setSearchUsers(query: String) {
     fun setSearchUsers() {
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://api.github.com/")
@@ -54,10 +52,9 @@ class MainViewModel : ViewModel() {
             return
         }
 
-        val filteredList = listUsers.value?.filter { githubUser ->
+        val filteredList = githubUsers.filter { githubUser ->
             githubUser.login.contains(query)
-        } ?: return
-
+        }
         listUsers.value = filteredList
     }
 }
